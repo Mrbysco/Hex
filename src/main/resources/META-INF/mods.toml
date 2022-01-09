@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion="[38,)"
+issueTrackerURL="https://github.com/Mrbysco/Hex"
+license="MIT"
+
+[[mods]]
+modId="hex"
+version="${file.jarVersion}"
+displayName="Hex"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/hex"
+authors="Mrbysco, ShyNieke"
+description='''
+More enchantments? More fun? More fun for everyone!
+'''
+[[dependencies.hex]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.18,1.19)"
+ordering="NONE"
+side="BOTH"
