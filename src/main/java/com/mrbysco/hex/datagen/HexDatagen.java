@@ -38,13 +38,19 @@ public class HexDatagen {
 			addEnchantmentDescription(EnchantmentRegistry.YIELDING, "Increases the amount of crops you can harvest");
 
 			addEnchantment(EnchantmentRegistry.AFFECTION, "Affection");
-			addEnchantmentDescription(EnchantmentRegistry.AFFECTION, "Prevents the tool from reaching durability 0");
+			addEnchantmentDescription(EnchantmentRegistry.AFFECTION, "Prevents the item from reaching durability 0");
 
 			addEnchantment(EnchantmentRegistry.YING, "Ying");
-			addEnchantmentDescription(EnchantmentRegistry.YING, "Repairs the tool up to 50% while in darkness");
+			addEnchantmentDescription(EnchantmentRegistry.YING, "Repairs the item up to 50% while in darkness");
 
 			addEnchantment(EnchantmentRegistry.YANG, "Yang");
-			addEnchantmentDescription(EnchantmentRegistry.YANG, "Repairs the tool up to 50% while in light");
+			addEnchantmentDescription(EnchantmentRegistry.YANG, "Repairs the item up to 50% while in light");
+
+			addEnchantment(EnchantmentRegistry.GOLDEN_GLINT, "Golden Glint");
+			addEnchantmentDescription(EnchantmentRegistry.GOLDEN_GLINT, "Tricks Piglins into thinking you are wearing gold armor");
+
+			addEnchantment(EnchantmentRegistry.AVOIDING, "Avoiding");
+			addEnchantmentDescription(EnchantmentRegistry.AVOIDING, "Upon falling into the void teleports the item to world spawn");
 		}
 
 		private void addEnchantmentDescription(Supplier<? extends Enchantment> key, String description) {

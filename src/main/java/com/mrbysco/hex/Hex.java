@@ -1,6 +1,7 @@
 package com.mrbysco.hex;
 
 import com.mrbysco.hex.config.HexConfig;
+import com.mrbysco.hex.handler.AvoidingHandler;
 import com.mrbysco.hex.handler.EnchantmentHandler;
 import com.mrbysco.hex.handler.YingYangHandler;
 import com.mrbysco.hex.registry.EnchantmentRegistry;
@@ -26,5 +27,6 @@ public class Hex {
 
         MinecraftForge.EVENT_BUS.register(new EnchantmentHandler());
         MinecraftForge.EVENT_BUS.register(new YingYangHandler());
+        MinecraftForge.EVENT_BUS.register(new AvoidingHandler());
     }
 }

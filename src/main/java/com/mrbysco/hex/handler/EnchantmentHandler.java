@@ -31,11 +31,9 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantmentHandler {
-
 	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		ItemStack stack = event.getItemStack();
-
 		handleAffection(stack, event);
 	}
 

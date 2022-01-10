@@ -1,12 +1,16 @@
 {
   "enchantment.hex.affection": "Affection",
-  "enchantment.hex.affection.desc": "Prevents the tool from reaching durability 0",
+  "enchantment.hex.affection.desc": "Prevents the item from reaching durability 0",
+  "enchantment.hex.avoiding": "Avoiding",
+  "enchantment.hex.avoiding.desc": "Upon falling into the void teleports the item to world spawn",
   "enchantment.hex.cultivation": "Cultivation",
   "enchantment.hex.cultivation.desc": "Tills an area around water when right-clicked",
+  "enchantment.hex.golden_glint": "Golden Glint",
+  "enchantment.hex.golden_glint.desc": "Tricks Piglins into thinking you are wearing gold armor",
   "enchantment.hex.yang": "Yang",
-  "enchantment.hex.yang.desc": "Repairs the tool up to 50% while in light",
+  "enchantment.hex.yang.desc": "Repairs the item up to 50% while in light",
   "enchantment.hex.yielding": "Yielding",
   "enchantment.hex.yielding.desc": "Increases the amount of crops you can harvest",
   "enchantment.hex.ying": "Ying",
-  "enchantment.hex.ying.desc": "Repairs the tool up to 50% while in darkness"
+  "enchantment.hex.ying.desc": "Repairs the item up to 50% while in darkness"
 }

@@ -1,24 +1,23 @@
 package com.mrbysco.hex.enchantment;
 
-import com.mrbysco.hex.config.HexConfig;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
-public class CultivactionEnchantment extends Enchantment {
-	public CultivactionEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
+public class AvoidingEnchantment extends Enchantment {
+	public AvoidingEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}
 
 	public int getMinCost(int level) {
-		return 5 + level * 7;
+		return level * 32;
 	}
 
 	public int getMaxCost(int level) {
-		return 50;
+		return this.getMinCost(level) + 50;
 	}
 
 	public int getMaxLevel() {
-		return HexConfig.COMMON.maxCultivationLevel.get();
+		return 1;
 	}
 }
