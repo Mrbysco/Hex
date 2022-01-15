@@ -3,6 +3,8 @@
   "enchantment.hex.affection.desc": "Prevents the item from reaching durability 0",
   "enchantment.hex.avoiding": "Avoiding",
   "enchantment.hex.avoiding.desc": "Upon falling into the void teleports the item to world spawn",
+  "enchantment.hex.cheapskate": "Cheap Skate",
+  "enchantment.hex.cheapskate.desc": "Locks the base repair level of an item",
   "enchantment.hex.cultivation": "Cultivation",
   "enchantment.hex.cultivation.desc": "Tills an area around water when right-clicked",
   "enchantment.hex.golden_glint": "Golden Glint",

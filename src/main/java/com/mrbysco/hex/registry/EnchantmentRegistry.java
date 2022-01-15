@@ -4,6 +4,7 @@ import com.mrbysco.hex.Reference;
 import com.mrbysco.hex.category.EnchantmentCategories;
 import com.mrbysco.hex.enchantment.AffectionEnchantment;
 import com.mrbysco.hex.enchantment.AvoidingEnchantment;
+import com.mrbysco.hex.enchantment.CheapskateEnchantment;
 import com.mrbysco.hex.enchantment.CultivationEnchantment;
 import com.mrbysco.hex.enchantment.GoldenGlintEnchantment;
 import com.mrbysco.hex.enchantment.YieldingEnchantment;
@@ -30,4 +31,6 @@ public class EnchantmentRegistry {
 
 	public static final RegistryObject<Enchantment> GOLDEN_GLINT = ENCHANTMENTS.register("golden_glint", () -> new GoldenGlintEnchantment(Rarity.VERY_RARE, EnchantmentCategory.ARMOR, ARMOR_SLOTS));
 	public static final RegistryObject<Enchantment> AVOIDING = ENCHANTMENTS.register("avoiding", () -> new AvoidingEnchantment(Rarity.RARE, EnchantmentCategory.VANISHABLE, EquipmentSlot.values()));
+
+	public static final RegistryObject<Enchantment> CHEAPSKATE = ENCHANTMENTS.register("cheapskate", () -> new CheapskateEnchantment(Rarity.UNCOMMON, EnchantmentCategories.REPAIRABLE, EquipmentSlot.values()));
 }

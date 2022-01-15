@@ -51,6 +51,9 @@ public class HexDatagen {
 
 			addEnchantment(EnchantmentRegistry.AVOIDING, "Avoiding");
 			addEnchantmentDescription(EnchantmentRegistry.AVOIDING, "Upon falling into the void teleports the item to world spawn");
+
+			addEnchantment(EnchantmentRegistry.CHEAPSKATE, "Cheap Skate");
+			addEnchantmentDescription(EnchantmentRegistry.CHEAPSKATE, "Locks the base repair level of an item");
 		}
 
 		private void addEnchantmentDescription(Supplier<? extends Enchantment> key, String description) {
