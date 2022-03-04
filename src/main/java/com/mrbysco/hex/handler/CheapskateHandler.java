@@ -11,9 +11,9 @@ public class CheapskateHandler {
 	@SubscribeEvent
 	public void onRepairEvent(AnvilUpdateEvent event) {
 		ItemStack input = event.getLeft();
-		if(EnchantmentUtil.hasEnchantment(EnchantmentRegistry.CHEAPSKATE.get(), input)) {
+		if (EnchantmentUtil.hasEnchantment(EnchantmentRegistry.CHEAPSKATE.get(), input)) {
 			ItemStack rightStack = event.getRight();
-			if(input.isDamageableItem() && input.getItem().isValidRepairItem(input, rightStack)) {
+			if (input.isDamageableItem() && input.getItem().isValidRepairItem(input, rightStack)) {
 				int cost = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegistry.CHEAPSKATE.get(), input);
 				switch (cost) {
 					default -> input.setRepairCost(30);

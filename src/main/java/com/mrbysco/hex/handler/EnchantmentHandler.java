@@ -51,7 +51,7 @@ public class EnchantmentHandler {
 		ItemStack stack = event.getItemStack();
 
 		boolean hasCultivation = EnchantmentUtil.hasEnchantment(EnchantmentRegistry.CULTIVATION.get(), stack);
-		if(hasCultivation) {
+		if (hasCultivation) {
 			BlockHitResult hitResult = getPlayerPOVHitResult(level, player, Fluid.ANY);
 			if (!(hitResult.getType() == HitResult.Type.MISS || hitResult.getType() != HitResult.Type.BLOCK)) {
 				BlockPos blockpos = hitResult.getBlockPos();
@@ -59,10 +59,10 @@ public class EnchantmentHandler {
 				BlockPos relativePos = blockpos.relative(direction);
 				if (level.mayInteract(player, blockpos) && player.mayUseItemAt(relativePos, direction, stack)) {
 					FluidState state = level.getFluidState(blockpos);
-					if(state.is(FluidTags.WATER)) {
+					if (state.is(FluidTags.WATER)) {
 						int radius = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegistry.CULTIVATION.get(), stack);
-						for(int x = -radius; x <= radius; x++) {
-							for(int y = -radius; y <= radius; y++) {
+						for (int x = -radius; x <= radius; x++) {
+							for (int y = -radius; y <= radius; y++) {
 								Vec3 vec3 = oldHitResult.getLocation().add(x, 0, y);
 								BlockPos newPos = blockpos.offset(x, 0, y);
 								stack.useOn(new UseOnContext(player, event.getHand(), new BlockHitResult(vec3, Direction.UP, newPos, false)));
@@ -84,17 +84,17 @@ public class EnchantmentHandler {
 		InteractionHand hand = event.getHand();
 
 		boolean hasYielding = EnchantmentUtil.hasEnchantment(EnchantmentRegistry.YIELDING.get(), stack);
-		if(hasYielding) {
+		if (hasYielding) {
 			int radius = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegistry.YIELDING.get(), stack);
-			for(int x = -radius; x <= radius; x++) {
-				for(int y = -radius; y <= radius; y++) {
+			for (int x = -radius; x <= radius; x++) {
+				for (int y = -radius; y <= radius; y++) {
 					BlockPos newPos = blockpos.offset(x, 0, y);
 					BlockState state = level.getBlockState(newPos);
-					if(state.getBlock() instanceof BushBlock || state.getBlock() instanceof LeavesBlock) {
-						if(state.getBlock() instanceof CropBlock cropBlock) {
-							if(cropBlock.isMaxAge(state)) {
+					if (state.getBlock() instanceof BushBlock || state.getBlock() instanceof LeavesBlock) {
+						if (state.getBlock() instanceof CropBlock cropBlock) {
+							if (cropBlock.isMaxAge(state)) {
 								//TODO: Check if another enchantment is enabled that plants the crop back
-								if(!player.isCreative()) {
+								if (!player.isCreative()) {
 									stack.hurtAndBreak(1, player, (entity) -> {
 										entity.broadcastBreakEvent(hand);
 										net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(entity, stack, hand);
@@ -103,7 +103,7 @@ public class EnchantmentHandler {
 								level.destroyBlock(newPos, !player.isCreative(), player);
 							}
 						} else {
-							if(!player.isCreative()) {
+							if (!player.isCreative()) {
 								stack.hurtAndBreak(1, player, (entity) -> {
 									entity.broadcastBreakEvent(hand);
 									net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(entity, stack, hand);
@@ -119,13 +119,13 @@ public class EnchantmentHandler {
 	}
 
 	private void handleAffection(ItemStack stack, Event event) {
-		if(event.isCancelable()) {
+		if (event.isCancelable()) {
 			boolean hasAffection = EnchantmentUtil.hasEnchantment(EnchantmentRegistry.AFFECTION.get(), stack);
-			if(hasAffection) {
+			if (hasAffection) {
 				int maxDamage = stack.getMaxDamage();
 				int damage = maxDamage - stack.getDamageValue();
-				int minAllowed = (int)Math.floor(((double)maxDamage) * HexConfig.COMMON.affectionPercentage.get()) + 1;
-				if(damage <= minAllowed) {
+				int minAllowed = (int) Math.floor(((double) maxDamage) * HexConfig.COMMON.affectionPercentage.get()) + 1;
+				if (damage <= minAllowed) {
 					//Cancel any interaction when durability is under configured percentage
 					event.setCanceled(true);
 				}
@@ -137,14 +137,14 @@ public class EnchantmentHandler {
 		float xRot = player.getXRot();
 		float yRot = player.getYRot();
 		Vec3 eyePosition = player.getEyePosition();
-		float f2 = Mth.cos(-yRot * ((float)Math.PI / 180F) - (float)Math.PI);
-		float f3 = Mth.sin(-yRot * ((float)Math.PI / 180F) - (float)Math.PI);
-		float f4 = -Mth.cos(-xRot * ((float)Math.PI / 180F));
-		float f5 = Mth.sin(-xRot * ((float)Math.PI / 180F));
+		float f2 = Mth.cos(-yRot * ((float) Math.PI / 180F) - (float) Math.PI);
+		float f3 = Mth.sin(-yRot * ((float) Math.PI / 180F) - (float) Math.PI);
+		float f4 = -Mth.cos(-xRot * ((float) Math.PI / 180F));
+		float f5 = Mth.sin(-xRot * ((float) Math.PI / 180F));
 		float f6 = f3 * f4;
 		float f7 = f2 * f4;
 		double reach = player.getAttribute(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get()).getValue();
-		Vec3 vec31 = eyePosition.add((double)f6 * reach, (double)f5 * reach, (double)f7 * reach);
+		Vec3 vec31 = eyePosition.add((double) f6 * reach, (double) f5 * reach, (double) f7 * reach);
 		return level.clip(new ClipContext(eyePosition, vec31, ClipContext.Block.OUTLINE, fluidContext, player));
 	}
 }

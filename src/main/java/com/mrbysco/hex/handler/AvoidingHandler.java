@@ -21,13 +21,13 @@ public class AvoidingHandler {
 	public void onLivingDrops(LivingDropsEvent event) {
 		Collection<ItemEntity> drops = event.getDrops();
 		List<ItemEntity> toRemove = new ArrayList<>();
-		for(ItemEntity drop : drops) {
+		for (ItemEntity drop : drops) {
 			ItemStack stack = drop.getItem().copy();
-			if(EnchantmentUtil.hasEnchantment(EnchantmentRegistry.AVOIDING.get(), stack)) {
+			if (EnchantmentUtil.hasEnchantment(EnchantmentRegistry.AVOIDING.get(), stack)) {
 				Level level = drop.level;
-				if(!level.isClientSide) {
-					ServerLevel serverLevel = (ServerLevel)level;
-					if(!level.dimension().location().equals(Level.OVERWORLD.location())) {
+				if (!level.isClientSide) {
+					ServerLevel serverLevel = (ServerLevel) level;
+					if (!level.dimension().location().equals(Level.OVERWORLD.location())) {
 						MinecraftServer server = serverLevel.getServer();
 						serverLevel = server.getLevel(Level.OVERWORLD);
 					}
@@ -44,9 +44,9 @@ public class AvoidingHandler {
 	public static void entityLeaveWorldEvent(ItemEntity itemEntity) {
 		Level level = itemEntity.level;
 		ItemStack stack = itemEntity.getItem().copy();
-		if(!level.isClientSide && EnchantmentUtil.hasEnchantment(EnchantmentRegistry.AVOIDING.get(), stack)) {
-			ServerLevel serverLevel = (ServerLevel)level;
-			if(!level.dimension().location().equals(Level.OVERWORLD.location())) {
+		if (!level.isClientSide && EnchantmentUtil.hasEnchantment(EnchantmentRegistry.AVOIDING.get(), stack)) {
+			ServerLevel serverLevel = (ServerLevel) level;
+			if (!level.dimension().location().equals(Level.OVERWORLD.location())) {
 				MinecraftServer server = serverLevel.getServer();
 				serverLevel = server.getLevel(Level.OVERWORLD);
 			}

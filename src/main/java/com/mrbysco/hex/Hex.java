@@ -1,5 +1,6 @@
 package com.mrbysco.hex;
 
+import com.mojang.logging.LogUtils;
 import com.mrbysco.hex.config.HexConfig;
 import com.mrbysco.hex.handler.AvoidingHandler;
 import com.mrbysco.hex.handler.CheapskateHandler;
@@ -12,23 +13,22 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 
 @Mod(Reference.MOD_ID)
 public class Hex {
-    public static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogUtils.getLogger();
 
-    public Hex() {
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        ModLoadingContext.get().registerConfig(Type.COMMON, HexConfig.commonSpec);
-        eventBus.register(HexConfig.class);
+	public Hex() {
+		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		ModLoadingContext.get().registerConfig(Type.COMMON, HexConfig.commonSpec);
+		eventBus.register(HexConfig.class);
 
-        EnchantmentRegistry.ENCHANTMENTS.register(eventBus);
+		EnchantmentRegistry.ENCHANTMENTS.register(eventBus);
 
-        MinecraftForge.EVENT_BUS.register(new EnchantmentHandler());
-        MinecraftForge.EVENT_BUS.register(new YingYangHandler());
-        MinecraftForge.EVENT_BUS.register(new AvoidingHandler());
-        MinecraftForge.EVENT_BUS.register(new CheapskateHandler());
-    }
+		MinecraftForge.EVENT_BUS.register(new EnchantmentHandler());
+		MinecraftForge.EVENT_BUS.register(new YingYangHandler());
+		MinecraftForge.EVENT_BUS.register(new AvoidingHandler());
+		MinecraftForge.EVENT_BUS.register(new CheapskateHandler());
+	}
 }

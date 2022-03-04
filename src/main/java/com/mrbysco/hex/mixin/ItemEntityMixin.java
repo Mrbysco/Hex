@@ -14,10 +14,10 @@ public class ItemEntityMixin {
 
 	@Inject(method = "tick()V", locals = LocalCapture.CAPTURE_FAILEXCEPTION,
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;tick()V",
-			ordinal = 0, shift = Shift.BEFORE))
+					ordinal = 0, shift = Shift.BEFORE))
 	public void hexTick(CallbackInfo ci) {
 		ItemEntity itemEntity = ((ItemEntity) (Object) this);
-		if (itemEntity.getY() < (double)(itemEntity.level.getMinBuildHeight() - 64)) {
+		if (itemEntity.getY() < (double) (itemEntity.level.getMinBuildHeight() - 64)) {
 			AvoidingHandler.entityLeaveWorldEvent(itemEntity);
 		}
 	}

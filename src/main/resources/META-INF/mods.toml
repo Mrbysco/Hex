@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[38,)"
+loaderVersion="[40,)"
 issueTrackerURL="https://github.com/Mrbysco/Hex"
 license="MIT"
 
@@ -15,6 +15,6 @@ More enchantments? More fun? More fun for everyone!
 [[dependencies.hex]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.18,1.19)"
+versionRange="[1.18.2,1.19)"
 ordering="NONE"
 side="BOTH"
