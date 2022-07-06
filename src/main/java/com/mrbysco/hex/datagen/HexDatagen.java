@@ -20,7 +20,7 @@ public class HexDatagen {
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
 		if (event.includeClient()) {
-			generator.addProvider(new HexLanguage(generator));
+			generator.addProvider(event.includeClient(), new HexLanguage(generator));
 		}
 	}
 
