@@ -10,7 +10,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class CheapskateHandler {
 	@SubscribeEvent
 	public void onRepairEvent(AnvilUpdateEvent event) {
-		ItemStack input = event.getLeft();
+		final ItemStack input = event.getLeft();
 		if (EnchantmentUtil.hasEnchantment(EnchantmentRegistry.CHEAPSKATE.get(), input)) {
 			ItemStack rightStack = event.getRight();
 			if (input.isDamageableItem() && input.getItem().isValidRepairItem(input, rightStack)) {

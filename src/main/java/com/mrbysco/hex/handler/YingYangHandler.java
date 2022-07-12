@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 public class YingYangHandler {
 	@SubscribeEvent
 	public void onPlayerTick(PlayerTickEvent event) {
-		Player player = event.player;
+		final Player player = event.player;
 		if (event.phase == Phase.END && event.side.isServer() && player != null) {
 			Level level = player.level;
 			BlockPos pos = player.blockPosition();

@@ -6,9 +6,9 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.LanguageProvider;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 import java.util.function.Supplier;
 

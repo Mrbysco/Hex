@@ -33,22 +33,22 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class EnchantmentHandler {
 	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event) {
-		ItemStack stack = event.getItemStack();
+		final ItemStack stack = event.getItemStack();
 		handleAffection(stack, event);
 	}
 
 	@SubscribeEvent
 	public void onPlayerAttack(AttackEntityEvent event) {
-		Player player = event.getPlayer();
+		final Player player = event.getEntity();
 		handleAffection(player.getMainHandItem(), event);
 	}
 
 	@SubscribeEvent
 	public void onRightClickBlock(RightClickBlock event) {
-		BlockHitResult oldHitResult = event.getHitVec();
-		Level level = event.getWorld();
-		Player player = event.getPlayer();
-		ItemStack stack = event.getItemStack();
+		final BlockHitResult oldHitResult = event.getHitVec();
+		final Level level = event.getLevel();
+		final Player player = event.getEntity();
+		final ItemStack stack = event.getItemStack();
 
 		boolean hasCultivation = EnchantmentUtil.hasEnchantment(EnchantmentRegistry.CULTIVATION.get(), stack);
 		if (hasCultivation) {
@@ -77,11 +77,11 @@ public class EnchantmentHandler {
 
 	@SubscribeEvent
 	public void onLeftClickBlock(LeftClickBlock event) {
-		Level level = event.getWorld();
-		Player player = event.getPlayer();
-		ItemStack stack = event.getItemStack();
-		BlockPos blockpos = event.getPos();
-		InteractionHand hand = event.getHand();
+		final Level level = event.getLevel();
+		final Player player = event.getEntity();
+		final ItemStack stack = event.getItemStack();
+		final BlockPos blockpos = event.getPos();
+		final InteractionHand hand = event.getHand();
 
 		boolean hasYielding = EnchantmentUtil.hasEnchantment(EnchantmentRegistry.YIELDING.get(), stack);
 		if (hasYielding) {
