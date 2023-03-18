@@ -3,6 +3,7 @@ package com.mrbysco.hex.datagen;
 import com.mrbysco.hex.Reference;
 import com.mrbysco.hex.registry.EnchantmentRegistry;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -17,15 +18,16 @@ public class HexDatagen {
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent event) {
 		DataGenerator generator = event.getGenerator();
+		PackOutput packOutput = generator.getPackOutput();
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
 		if (event.includeClient()) {
-			generator.addProvider(event.includeClient(), new HexLanguage(generator));
+			generator.addProvider(event.includeClient(), new HexLanguage(packOutput));
 		}
 	}
 
 	private static class HexLanguage extends LanguageProvider {
-		public HexLanguage(DataGenerator gen) {
+		public HexLanguage(PackOutput gen) {
 			super(gen, Reference.MOD_ID, "en_us");
 		}
 
