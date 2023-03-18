@@ -24,6 +24,6 @@ public class CheapskateEnchantment extends Enchantment {
 
 	@Override
 	protected boolean checkCompatibility(Enchantment enchantment) {
-		return enchantment instanceof MendingEnchantment ? false : super.checkCompatibility(enchantment);
+		return !(enchantment instanceof MendingEnchantment) && super.checkCompatibility(enchantment);
 	}
 }
