@@ -143,7 +143,7 @@ public class EnchantmentHandler {
 		float f5 = Mth.sin(-xRot * ((float) Math.PI / 180F));
 		float f6 = f3 * f4;
 		float f7 = f2 * f4;
-		double reach = player.getAttribute(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get()).getValue();
+		double reach = player.getBlockReach();
 		Vec3 vec31 = eyePosition.add((double) f6 * reach, (double) f5 * reach, (double) f7 * reach);
 		return level.clip(new ClipContext(eyePosition, vec31, ClipContext.Block.OUTLINE, fluidContext, player));
 	}

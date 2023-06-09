@@ -17,7 +17,7 @@ public class ItemEntityMixin {
 					ordinal = 0, shift = Shift.BEFORE))
 	public void hexTick(CallbackInfo ci) {
 		ItemEntity itemEntity = ((ItemEntity) (Object) this);
-		if (itemEntity.getY() < (double) (itemEntity.level.getMinBuildHeight() - 64)) {
+		if (itemEntity.getY() < (double) (itemEntity.level().getMinBuildHeight() - 64)) {
 			AvoidingHandler.entityLeaveWorldEvent(itemEntity);
 		}
 	}

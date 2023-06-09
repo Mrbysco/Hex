@@ -24,7 +24,7 @@ public class AvoidingHandler {
 		for (ItemEntity drop : drops) {
 			ItemStack stack = drop.getItem().copy();
 			if (EnchantmentUtil.hasEnchantment(EnchantmentRegistry.AVOIDING.get(), stack)) {
-				Level level = drop.level;
+				Level level = drop.level();
 				if (!level.isClientSide) {
 					ServerLevel serverLevel = (ServerLevel) level;
 					if (!level.dimension().location().equals(Level.OVERWORLD.location())) {
@@ -42,7 +42,7 @@ public class AvoidingHandler {
 	}
 
 	public static void entityLeaveWorldEvent(ItemEntity itemEntity) {
-		Level level = itemEntity.level;
+		Level level = itemEntity.level();
 		ItemStack stack = itemEntity.getItem().copy();
 		if (!level.isClientSide && EnchantmentUtil.hasEnchantment(EnchantmentRegistry.AVOIDING.get(), stack)) {
 			ServerLevel serverLevel = (ServerLevel) level;

@@ -17,7 +17,7 @@ public class YingYangHandler {
 	public void onPlayerTick(PlayerTickEvent event) {
 		final Player player = event.player;
 		if (event.phase == Phase.END && event.side.isServer() && player != null) {
-			Level level = player.level;
+			Level level = player.level();
 			BlockPos pos = player.blockPosition();
 			if (!player.isSpectator() && level.getGameTime() % 50 == 0) {
 				int lightEmission = level.getRawBrightness(pos, 0);
