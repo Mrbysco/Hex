@@ -6,11 +6,11 @@
   "refmap": "hex.refmap.json",
   "target": "@env(DEFAULT)",
   "mixins": [
-	"ItemEntityMixin",
-	"PiglinAiMixin",
-	"RepairItemRecipeMixin"
+    "ItemEntityMixin",
+    "PiglinAiMixin",
+    "RepairItemRecipeMixin"
   ],
   "injectors": {
-	"defaultRequire": 1
+    "defaultRequire": 1
   }
 }
