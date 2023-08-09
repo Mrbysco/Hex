@@ -1,1 +1,1 @@
-* Initial update to 1.20
+* Add curse of Non Combining
