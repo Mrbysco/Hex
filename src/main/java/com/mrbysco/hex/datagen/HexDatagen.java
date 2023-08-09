@@ -39,7 +39,7 @@ public class HexDatagen {
 			addEnchantment(EnchantmentRegistry.YIELDING, "Yielding");
 			addEnchantmentDescription(EnchantmentRegistry.YIELDING, "Increases the amount of crops you can harvest");
 
-			addEnchantment(EnchantmentRegistry.AFFECTION, "Affection");
+			addEnchantment(EnchantmentRegistry.AFFECTION, "Curse of Affection");
 			addEnchantmentDescription(EnchantmentRegistry.AFFECTION, "Prevents the item from reaching durability 0");
 
 			addEnchantment(EnchantmentRegistry.YING, "Ying");
@@ -56,6 +56,9 @@ public class HexDatagen {
 
 			addEnchantment(EnchantmentRegistry.CHEAPSKATE, "Cheap Skate");
 			addEnchantmentDescription(EnchantmentRegistry.CHEAPSKATE, "Locks the base repair level of an item");
+
+			addEnchantment(EnchantmentRegistry.NONCOMBINING, "Curse of Non Combining");
+			addEnchantmentDescription(EnchantmentRegistry.NONCOMBINING, "Stops the tool from being used in repair recipes");
 		}
 
 		private void addEnchantmentDescription(Supplier<? extends Enchantment> key, String description) {

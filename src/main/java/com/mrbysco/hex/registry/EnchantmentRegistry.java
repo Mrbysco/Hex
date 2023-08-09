@@ -7,6 +7,7 @@ import com.mrbysco.hex.enchantment.AvoidingEnchantment;
 import com.mrbysco.hex.enchantment.CheapskateEnchantment;
 import com.mrbysco.hex.enchantment.CultivationEnchantment;
 import com.mrbysco.hex.enchantment.GoldenGlintEnchantment;
+import com.mrbysco.hex.enchantment.NoncombiningEnchantment;
 import com.mrbysco.hex.enchantment.YieldingEnchantment;
 import com.mrbysco.hex.enchantment.YingYangEnchantment;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -33,4 +34,6 @@ public class EnchantmentRegistry {
 	public static final RegistryObject<Enchantment> AVOIDING = ENCHANTMENTS.register("avoiding", () -> new AvoidingEnchantment(Rarity.RARE, EnchantmentCategory.VANISHABLE, EquipmentSlot.values()));
 
 	public static final RegistryObject<Enchantment> CHEAPSKATE = ENCHANTMENTS.register("cheapskate", () -> new CheapskateEnchantment(Rarity.UNCOMMON, EnchantmentCategories.REPAIRABLE, EquipmentSlot.values()));
+
+	public static final RegistryObject<Enchantment> NONCOMBINING = ENCHANTMENTS.register("noncombining", () -> new NoncombiningEnchantment(Rarity.VERY_RARE, EnchantmentCategories.REPAIRABLE, EquipmentSlot.values()));
 }
