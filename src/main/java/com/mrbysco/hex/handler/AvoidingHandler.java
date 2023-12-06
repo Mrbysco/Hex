@@ -1,5 +1,6 @@
 package com.mrbysco.hex.handler;
 
+import com.mrbysco.hex.config.HexConfig;
 import com.mrbysco.hex.registry.EnchantmentRegistry;
 import com.mrbysco.hex.util.EnchantmentUtil;
 import net.minecraft.core.BlockPos;
@@ -21,23 +22,27 @@ public class AvoidingHandler {
 	public void onLivingDrops(LivingDropsEvent event) {
 		Collection<ItemEntity> drops = event.getDrops();
 		List<ItemEntity> toRemove = new ArrayList<>();
-		for (ItemEntity drop : drops) {
-			ItemStack stack = drop.getItem().copy();
-			if (EnchantmentUtil.hasEnchantment(EnchantmentRegistry.AVOIDING.get(), stack)) {
-				Level level = drop.level();
-				if (!level.isClientSide) {
-					ServerLevel serverLevel = (ServerLevel) level;
-					if (!level.dimension().location().equals(Level.OVERWORLD.location())) {
-						MinecraftServer server = serverLevel.getServer();
-						serverLevel = server.getLevel(Level.OVERWORLD);
+		final boolean avoidingFlag = HexConfig.COMMON.avoidingUponDeath.get();
+		if (avoidingFlag) {
+			for (ItemEntity drop : drops) {
+				ItemStack stack = drop.getItem().copy();
+				if (EnchantmentUtil.hasEnchantment(EnchantmentRegistry.AVOIDING.get(), stack)) {
+					Level level = drop.level();
+					if (!level.isClientSide) {
+						ServerLevel serverLevel = (ServerLevel) level;
+						if (!level.dimension().location().equals(Level.OVERWORLD.location())) {
+							MinecraftServer server = serverLevel.getServer();
+							serverLevel = server.getLevel(Level.OVERWORLD);
+						}
+						BlockPos spawnPos = serverLevel.getSharedSpawnPos();
+						ItemEntity newEntity = new ItemEntity(serverLevel, spawnPos.getX(), spawnPos.getY() + 0.5, spawnPos.getZ(), stack);
+						serverLevel.addFreshEntity(newEntity);
 					}
-					BlockPos spawnPos = serverLevel.getSharedSpawnPos();
-					ItemEntity newEntity = new ItemEntity(serverLevel, spawnPos.getX(), spawnPos.getY() + 0.5, spawnPos.getZ(), stack);
-					serverLevel.addFreshEntity(newEntity);
+					toRemove.add(drop);
 				}
-				toRemove.add(drop);
 			}
 		}
+
 		drops.removeAll(toRemove);
 	}
 

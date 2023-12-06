@@ -4,6 +4,7 @@ import com.mrbysco.hex.Hex;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
@@ -13,6 +14,7 @@ public class HexConfig {
 		public final IntValue maxCultivationLevel;
 		public final IntValue maxYieldingLevel;
 		public final DoubleValue affectionPercentage;
+		public final BooleanValue avoidingUponDeath;
 
 		Common(ForgeConfigSpec.Builder builder) {
 			builder.comment("General settings")
@@ -29,6 +31,10 @@ public class HexConfig {
 			affectionPercentage = builder
 					.comment("Defines the durability percentage that affects the Affection Enchantment [Default: 0.01 (1%)]")
 					.defineInRange("affectionPercentage", 0.01, 0.01, 1.0);
+
+			avoidingUponDeath = builder
+					.comment("Defines if the Avoiding Enchantment should teleport the item to world spawn upon death [Default: true]")
+					.define("avoidingUponDeath", true);
 
 			builder.pop();
 		}
