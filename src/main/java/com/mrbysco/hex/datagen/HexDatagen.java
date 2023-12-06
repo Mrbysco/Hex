@@ -1,15 +1,15 @@
 package com.mrbysco.hex.datagen;
 
-import com.mrbysco.hex.Reference;
+import com.mrbysco.hex.Hex;
 import com.mrbysco.hex.registry.EnchantmentRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.LanguageProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
 
 import java.util.function.Supplier;
 
@@ -28,7 +28,7 @@ public class HexDatagen {
 
 	private static class HexLanguage extends LanguageProvider {
 		public HexLanguage(PackOutput gen) {
-			super(gen, Reference.MOD_ID, "en_us");
+			super(gen, Hex.MOD_ID, "en_us");
 		}
 
 		@Override

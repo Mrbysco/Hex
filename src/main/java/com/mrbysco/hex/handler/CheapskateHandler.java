@@ -4,8 +4,8 @@ import com.mrbysco.hex.registry.EnchantmentRegistry;
 import com.mrbysco.hex.util.EnchantmentUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.AnvilUpdateEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 
 public class CheapskateHandler {
 	@SubscribeEvent

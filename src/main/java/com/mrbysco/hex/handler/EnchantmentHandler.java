@@ -23,16 +23,46 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.LeftClickBlock;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.ICancellableEvent;
+import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.bus.api.Event;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.EventHooks;
 
 public class EnchantmentHandler {
 	@SubscribeEvent
-	public void onPlayerInteract(PlayerInteractEvent event) {
+	public void onPlayerLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
+		final ItemStack stack = event.getItemStack();
+		handleAffection(stack, event);
+	}
+
+	@SubscribeEvent
+	public void onPlayerLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
+		final ItemStack stack = event.getItemStack();
+		handleAffection(stack, event);
+	}
+
+	@SubscribeEvent
+	public void onPlayerLeftClickEmpty(PlayerInteractEvent.RightClickEmpty event) {
+		final ItemStack stack = event.getItemStack();
+		handleAffection(stack, event);
+	}
+
+	@SubscribeEvent
+	public void onPlayerLeftClickBlock(PlayerInteractEvent.RightClickBlock event) {
+		final ItemStack stack = event.getItemStack();
+		handleAffection(stack, event);
+	}
+
+	@SubscribeEvent
+	public void onPlayerEntityInteract(PlayerInteractEvent.EntityInteract event) {
+		final ItemStack stack = event.getItemStack();
+		handleAffection(stack, event);
+	}
+
+	@SubscribeEvent
+	public void onPlayerEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
 		final ItemStack stack = event.getItemStack();
 		handleAffection(stack, event);
 	}
@@ -44,7 +74,7 @@ public class EnchantmentHandler {
 	}
 
 	@SubscribeEvent
-	public void onRightClickBlock(RightClickBlock event) {
+	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		final BlockHitResult oldHitResult = event.getHitVec();
 		final Level level = event.getLevel();
 		final Player player = event.getEntity();
@@ -76,7 +106,7 @@ public class EnchantmentHandler {
 	}
 
 	@SubscribeEvent
-	public void onLeftClickBlock(LeftClickBlock event) {
+	public void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
 		final Level level = event.getLevel();
 		final Player player = event.getEntity();
 		final ItemStack stack = event.getItemStack();
@@ -97,7 +127,7 @@ public class EnchantmentHandler {
 								if (!player.isCreative()) {
 									stack.hurtAndBreak(1, player, (entity) -> {
 										entity.broadcastBreakEvent(hand);
-										net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(entity, stack, hand);
+										EventHooks.onPlayerDestroyItem(entity, stack, hand);
 									});
 								}
 								level.destroyBlock(newPos, !player.isCreative(), player);
@@ -106,7 +136,7 @@ public class EnchantmentHandler {
 							if (!player.isCreative()) {
 								stack.hurtAndBreak(1, player, (entity) -> {
 									entity.broadcastBreakEvent(hand);
-									net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(entity, stack, hand);
+									EventHooks.onPlayerDestroyItem(entity, stack, hand);
 								});
 							}
 							level.destroyBlock(newPos, true, player);
@@ -119,7 +149,7 @@ public class EnchantmentHandler {
 	}
 
 	private void handleAffection(ItemStack stack, Event event) {
-		if (event.isCancelable()) {
+		if (event instanceof ICancellableEvent cancellableEvent) {
 			boolean hasAffection = EnchantmentUtil.hasEnchantment(EnchantmentRegistry.AFFECTION.get(), stack);
 			if (hasAffection) {
 				int maxDamage = stack.getMaxDamage();
@@ -127,7 +157,7 @@ public class EnchantmentHandler {
 				int minAllowed = (int) Math.floor(((double) maxDamage) * HexConfig.COMMON.affectionPercentage.get()) + 1;
 				if (damage <= minAllowed) {
 					//Cancel any interaction when durability is under configured percentage
-					event.setCanceled(true);
+					cancellableEvent.setCanceled(true);
 				}
 			}
 		}

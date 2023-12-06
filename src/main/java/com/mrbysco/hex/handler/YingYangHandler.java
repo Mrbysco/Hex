@@ -6,17 +6,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.event.TickEvent.PlayerTickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.TickEvent;
 
 import java.util.function.Predicate;
 
 public class YingYangHandler {
 	@SubscribeEvent
-	public void onPlayerTick(PlayerTickEvent event) {
+	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		final Player player = event.player;
-		if (event.phase == Phase.END && event.side.isServer() && player != null) {
+		if (event.phase == TickEvent.Phase.END && event.side.isServer() && player != null) {
 			Level level = player.level();
 			BlockPos pos = player.blockPosition();
 			if (!player.isSpectator() && level.getGameTime() % 50 == 0) {

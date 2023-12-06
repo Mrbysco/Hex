@@ -1,1 +1,1 @@
-* Add a config option `avoidingUponDeath` Allowing the disabling of the `Avoiding` enchant teleporting the item to spawn upon death.
+* Initial update to 1.20.2 (NeoForge)
