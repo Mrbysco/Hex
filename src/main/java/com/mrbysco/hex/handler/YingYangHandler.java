@@ -7,16 +7,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.function.Predicate;
 
 public class YingYangHandler {
 	@SubscribeEvent
-	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-		final Player player = event.player;
-		if (event.phase == TickEvent.Phase.END && event.side.isServer() && player != null) {
-			Level level = player.level();
+	public void onPlayerTick(PlayerTickEvent.Post event) {
+		final Player player = event.getEntity();
+		final Level level = player.level();
+		if (!level.isClientSide() && player != null) {
 			BlockPos pos = player.blockPosition();
 			if (!player.isSpectator() && level.getGameTime() % 50 == 0) {
 				int lightEmission = level.getRawBrightness(pos, 0);

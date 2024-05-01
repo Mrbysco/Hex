@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -23,12 +24,11 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.ICancellableEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.bus.api.Event;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.EventHooks;
 
 public class EnchantmentHandler {
 	@SubscribeEvent
@@ -121,23 +121,20 @@ public class EnchantmentHandler {
 					BlockPos newPos = blockpos.offset(x, 0, y);
 					BlockState state = level.getBlockState(newPos);
 					if (state.getBlock() instanceof BushBlock || state.getBlock() instanceof LeavesBlock) {
+						EquipmentSlot slot = hand == InteractionHand.OFF_HAND
+								? EquipmentSlot.OFFHAND
+								: EquipmentSlot.MAINHAND;
 						if (state.getBlock() instanceof CropBlock cropBlock) {
 							if (cropBlock.isMaxAge(state)) {
 								//TODO: Check if another enchantment is enabled that plants the crop back
 								if (!player.isCreative()) {
-									stack.hurtAndBreak(1, player, (entity) -> {
-										entity.broadcastBreakEvent(hand);
-										EventHooks.onPlayerDestroyItem(entity, stack, hand);
-									});
+									stack.hurtAndBreak(1, player, slot);
 								}
 								level.destroyBlock(newPos, !player.isCreative(), player);
 							}
 						} else {
 							if (!player.isCreative()) {
-								stack.hurtAndBreak(1, player, (entity) -> {
-									entity.broadcastBreakEvent(hand);
-									EventHooks.onPlayerDestroyItem(entity, stack, hand);
-								});
+								stack.hurtAndBreak(1, player, slot);
 							}
 							level.destroyBlock(newPos, true, player);
 						}
@@ -173,7 +170,7 @@ public class EnchantmentHandler {
 		float f5 = Mth.sin(-xRot * ((float) Math.PI / 180F));
 		float f6 = f3 * f4;
 		float f7 = f2 * f4;
-		double reach = player.getBlockReach();
+		double reach = player.blockInteractionRange();
 		Vec3 vec31 = eyePosition.add((double) f6 * reach, (double) f5 * reach, (double) f7 * reach);
 		return level.clip(new ClipContext(eyePosition, vec31, ClipContext.Block.OUTLINE, fluidContext, player));
 	}

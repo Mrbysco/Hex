@@ -8,6 +8,7 @@ import com.mrbysco.hex.handler.EnchantmentHandler;
 import com.mrbysco.hex.handler.YingYangHandler;
 import com.mrbysco.hex.registry.EnchantmentRegistry;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
@@ -19,8 +20,8 @@ public class Hex {
 	public static final String MOD_ID = "hex";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
-	public Hex(IEventBus eventBus) {
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, HexConfig.commonSpec);
+	public Hex(IEventBus eventBus, ModContainer container) {
+		container.registerConfig(ModConfig.Type.COMMON, HexConfig.commonSpec);
 		eventBus.register(HexConfig.class);
 
 		EnchantmentRegistry.ENCHANTMENTS.register(eventBus);

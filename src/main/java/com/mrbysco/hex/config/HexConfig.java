@@ -1,32 +1,21 @@
 package com.mrbysco.hex.config;
 
 import com.mrbysco.hex.Hex;
-import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
-import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
-import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
+import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class HexConfig {
 	public static class Common {
-		public final IntValue maxCultivationLevel;
-		public final IntValue maxYieldingLevel;
 		public final DoubleValue affectionPercentage;
 		public final BooleanValue avoidingUponDeath;
 
 		Common(ModConfigSpec.Builder builder) {
 			builder.comment("General settings")
 					.push("General");
-
-			maxCultivationLevel = builder
-					.comment("Defines the maximum level of the Cultivation Enchantment that can be achieved [Default: 4]")
-					.defineInRange("maxAffection", 4, 1, 5);
-
-			maxYieldingLevel = builder
-					.comment("Defines the maximum level of the Yielding Enchantment that can be achieved [Default: 4]")
-					.defineInRange("maxYieldingLevel", 4, 1, 5);
 
 			affectionPercentage = builder
 					.comment("Defines the durability percentage that affects the Affection Enchantment [Default: 0.01 (1%)]")
