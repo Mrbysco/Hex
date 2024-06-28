@@ -6,10 +6,9 @@ import com.mrbysco.hex.handler.AvoidingHandler;
 import com.mrbysco.hex.handler.CheapskateHandler;
 import com.mrbysco.hex.handler.EnchantmentHandler;
 import com.mrbysco.hex.handler.YingYangHandler;
-import com.mrbysco.hex.registry.EnchantmentRegistry;
+import com.mrbysco.hex.registry.EnchantmentEffectRegistry;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
@@ -24,7 +23,7 @@ public class Hex {
 		container.registerConfig(ModConfig.Type.COMMON, HexConfig.commonSpec);
 		eventBus.register(HexConfig.class);
 
-		EnchantmentRegistry.ENCHANTMENTS.register(eventBus);
+		EnchantmentEffectRegistry.ENCHANTMENT_EFFECT_REGISTER.register(eventBus);
 
 		NeoForge.EVENT_BUS.register(new EnchantmentHandler());
 		NeoForge.EVENT_BUS.register(new YingYangHandler());

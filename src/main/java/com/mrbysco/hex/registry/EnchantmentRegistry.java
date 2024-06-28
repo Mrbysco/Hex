@@ -1,97 +1,137 @@
 package com.mrbysco.hex.registry;
 
 import com.mrbysco.hex.Hex;
-import com.mrbysco.hex.enchantment.AffectionEnchantment;
-import com.mrbysco.hex.enchantment.CheapskateEnchantment;
-import com.mrbysco.hex.enchantment.NoncombiningEnchantment;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.function.Supplier;
 
 public class EnchantmentRegistry {
-	public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(Registries.ENCHANTMENT, Hex.MOD_ID);
+	public static final ResourceKey<Enchantment> CULTIVATION = key("cultivation");
+	public static final ResourceKey<Enchantment> YIELDING = key("yielding");
+	public static final ResourceKey<Enchantment> AFFECTION = key("affection");
+	public static final ResourceKey<Enchantment> YING = key("ying");
+	public static final ResourceKey<Enchantment> YANG = key("yang");
+	public static final ResourceKey<Enchantment> GOLDEN_GLINT = key("golden_glint");
+	public static final ResourceKey<Enchantment> AVOIDING = key("avoiding");
+	public static final ResourceKey<Enchantment> CHEAPSKATE = key("cheapskate");
+	public static final ResourceKey<Enchantment> NONCOMBINING = key("noncombining");
 
-	private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+	public static void bootstrap(BootstrapContext<Enchantment> context) {
+		HolderGetter<Item> itemHolderGetter = context.lookup(Registries.ITEM);
 
-	public static final Supplier<Enchantment> CULTIVATION = ENCHANTMENTS.register(
-			"cultivation",
-			() -> new Enchantment(
-					Enchantment.definition(ItemTags.HOES, 5, 3,
-							Enchantment.dynamicCost(12, 7),
-							Enchantment.constantCost(50), 2, EquipmentSlot.MAINHAND)
-			)
-	);
+		register(
+				context,
+				CULTIVATION,
+				Enchantment.enchantment(
+						Enchantment.definition(
+								itemHolderGetter.getOrThrow(ItemTags.HOES),
+								5, 3,
+								Enchantment.dynamicCost(12, 7),
+								Enchantment.constantCost(50), 2, EquipmentSlotGroup.MAINHAND)
+				)
+		);
 
-	public static final Supplier<Enchantment> YIELDING = ENCHANTMENTS.register(
-			"yielding",
-			() -> new Enchantment(
-					Enchantment.definition(ItemTags.HOES, 5, 4,
-							Enchantment.dynamicCost(12, 7),
-							Enchantment.constantCost(50), 2, EquipmentSlot.MAINHAND)
-			)
-	);
+		register(
+				context,
+				YIELDING,
+				Enchantment.enchantment(
+						Enchantment.definition(itemHolderGetter.getOrThrow(ItemTags.HOES),
+								5, 4,
+								Enchantment.dynamicCost(12, 7),
+								Enchantment.constantCost(50), 2, EquipmentSlotGroup.MAINHAND)
+				)
+		);
 
-	public static final Supplier<Enchantment> AFFECTION = ENCHANTMENTS.register(
-			"affection",
-			() -> new AffectionEnchantment(
-					Enchantment.definition(ItemTags.VANISHING_ENCHANTABLE, 1, 1,
-							Enchantment.constantCost(25),
-							Enchantment.constantCost(50), 2, EquipmentSlot.values())
-			)
-	);
+		register(
+				context,
+				AFFECTION,
+				Enchantment.enchantment(
+						Enchantment.definition(itemHolderGetter.getOrThrow(ItemTags.VANISHING_ENCHANTABLE),
+								1, 1,
+								Enchantment.constantCost(25),
+								Enchantment.constantCost(50), 2, EquipmentSlotGroup.ANY)
+				).withEffect(EnchantmentEffectRegistry.AFFECTION.get())
+		);
 
-	public static final Supplier<Enchantment> YING = ENCHANTMENTS.register(
-			"ying",
-			() -> new Enchantment(
-					Enchantment.definition(ItemTags.VANISHING_ENCHANTABLE, 2, 1,
-							Enchantment.constantCost(30),
-							Enchantment.constantCost(80), 2, EquipmentSlot.values())
-			)
-	);
-	public static final Supplier<Enchantment> YANG = ENCHANTMENTS.register(
-			"yang",
-			() -> new Enchantment(
-					Enchantment.definition(ItemTags.VANISHING_ENCHANTABLE, 2, 1,
-							Enchantment.constantCost(30),
-							Enchantment.constantCost(80), 2, EquipmentSlot.values())
-			)
-	);
+		register(
+				context,
+				YING,
+				Enchantment.enchantment(
+						Enchantment.definition(itemHolderGetter.getOrThrow(ItemTags.VANISHING_ENCHANTABLE),
+								2, 1,
+								Enchantment.constantCost(30),
+								Enchantment.constantCost(80), 2, EquipmentSlotGroup.ANY)
+				).withEffect(EnchantmentEffectRegistry.YING.get())
+		);
 
-	public static final Supplier<Enchantment> GOLDEN_GLINT = ENCHANTMENTS.register(
-			"golden_glint",
-			() -> new Enchantment(
-					Enchantment.definition(ItemTags.VANISHING_ENCHANTABLE, 1, 1,
-							Enchantment.constantCost(25),
-							Enchantment.constantCost(75), 2, ARMOR_SLOTS)
-			)
-	);
-	public static final Supplier<Enchantment> AVOIDING = ENCHANTMENTS.register(
-			"avoiding",
-			() -> new Enchantment(
-					Enchantment.definition(ItemTags.VANISHING_ENCHANTABLE, 2, 1,
-							Enchantment.constantCost(32),
-							Enchantment.constantCost(82), 2, EquipmentSlot.values())
-			)
-	);
+		register(
+				context,
+				YANG,
+				Enchantment.enchantment(
+						Enchantment.definition(itemHolderGetter.getOrThrow(ItemTags.VANISHING_ENCHANTABLE),
+								2, 1,
+								Enchantment.constantCost(30),
+								Enchantment.constantCost(80), 2, EquipmentSlotGroup.ANY)
+				).withEffect(EnchantmentEffectRegistry.YANG.get())
+		);
 
-	public static final Supplier<Enchantment> CHEAPSKATE = ENCHANTMENTS.register(
-			"cheapskate",
-			() -> new CheapskateEnchantment(
-					Enchantment.definition(ItemTags.DURABILITY_ENCHANTABLE, 5, 1,
-							Enchantment.constantCost(10),
-							Enchantment.constantCost(15), 2, EquipmentSlot.values())
-			)
-	);
-	public static final Supplier<Enchantment> NONCOMBINING = ENCHANTMENTS.register(
-			"noncombining",
-			() -> new NoncombiningEnchantment(
-					Enchantment.definition(ItemTags.DURABILITY_ENCHANTABLE, 1, 1,
-							Enchantment.constantCost(25),
-							Enchantment.constantCost(50), 1, EquipmentSlot.values())
-			)
-	);
+		register(
+				context,
+				GOLDEN_GLINT,
+				Enchantment.enchantment(
+						Enchantment.definition(itemHolderGetter.getOrThrow(ItemTags.VANISHING_ENCHANTABLE),
+								1, 1,
+								Enchantment.constantCost(25),
+								Enchantment.constantCost(75), 2, EquipmentSlotGroup.ARMOR)
+				).withEffect(EnchantmentEffectRegistry.GOLDEN_GLINT.get())
+		);
+
+		register(
+				context,
+				AVOIDING,
+				Enchantment.enchantment(
+						Enchantment.definition(itemHolderGetter.getOrThrow(ItemTags.VANISHING_ENCHANTABLE),
+								2, 1,
+								Enchantment.constantCost(32),
+								Enchantment.constantCost(82), 2, EquipmentSlotGroup.ANY)
+				).withEffect(EnchantmentEffectRegistry.AVOIDING.get())
+		);
+
+		register(
+				context,
+				CHEAPSKATE,
+				Enchantment.enchantment(
+						Enchantment.definition(itemHolderGetter.getOrThrow(ItemTags.DURABILITY_ENCHANTABLE),
+								5, 1,
+								Enchantment.constantCost(10),
+								Enchantment.constantCost(15), 2, EquipmentSlotGroup.ANY)
+				)
+		);
+
+		register(
+				context,
+				NONCOMBINING,
+				Enchantment.enchantment(
+						Enchantment.definition(itemHolderGetter.getOrThrow(ItemTags.DURABILITY_ENCHANTABLE),
+								1, 1,
+								Enchantment.constantCost(25),
+								Enchantment.constantCost(50), 1, EquipmentSlotGroup.ANY)
+				).withEffect(EnchantmentEffectRegistry.NON_COMBINING.get())
+		);
+	}
+
+	private static ResourceKey<Enchantment> key(String path) {
+		return ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(Hex.MOD_ID, path));
+	}
+
+	private static void register(BootstrapContext<Enchantment> context, ResourceKey<Enchantment> resourceKey,
+	                             Enchantment.Builder builder) {
+		context.register(resourceKey, builder.build(resourceKey.location()));
+	}
 }

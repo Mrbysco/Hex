@@ -1,10 +1,12 @@
 package com.mrbysco.hex.handler;
 
+import com.mrbysco.hex.registry.EnchantmentEffectRegistry;
 import com.mrbysco.hex.registry.EnchantmentRegistry;
 import com.mrbysco.hex.util.EnchantmentUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -29,7 +31,7 @@ public class YingYangHandler {
 
 	private void repairYingItems(Player player, int lightValue) {
 		Predicate<ItemStack> stackPredicate = (stack) -> stack.isDamaged() && stack.getDamageValue() > (int) ((double) stack.getMaxDamage() / 2.0D)
-				&& EnchantmentUtil.hasEnchantment(EnchantmentRegistry.YING.get(), stack);
+				&& EnchantmentHelper.has(stack, EnchantmentEffectRegistry.YING.get());
 
 		if (lightValue <= 7) {
 			for (ItemStack stack : player.getArmorSlots()) {
@@ -48,7 +50,7 @@ public class YingYangHandler {
 
 	private void repairYangItems(Player player, int lightValue) {
 		Predicate<ItemStack> stackPredicate = (stack) -> stack.isDamaged() && stack.getDamageValue() > (int) ((double) stack.getMaxDamage() / 2.0D)
-				&& EnchantmentUtil.hasEnchantment(EnchantmentRegistry.YANG.get(), stack);
+				&& EnchantmentHelper.has(stack, EnchantmentEffectRegistry.YANG.get());
 
 		if (lightValue > 7) {
 			for (ItemStack stack : player.getArmorSlots()) {

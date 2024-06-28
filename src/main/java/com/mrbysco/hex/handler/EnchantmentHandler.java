@@ -1,6 +1,7 @@
 package com.mrbysco.hex.handler;
 
 import com.mrbysco.hex.config.HexConfig;
+import com.mrbysco.hex.registry.EnchantmentEffectRegistry;
 import com.mrbysco.hex.registry.EnchantmentRegistry;
 import com.mrbysco.hex.util.EnchantmentUtil;
 import net.minecraft.core.BlockPos;
@@ -80,8 +81,8 @@ public class EnchantmentHandler {
 		final Player player = event.getEntity();
 		final ItemStack stack = event.getItemStack();
 
-		boolean hasCultivation = EnchantmentUtil.hasEnchantment(EnchantmentRegistry.CULTIVATION.get(), stack);
-		if (hasCultivation) {
+		int cultivationLevel = stack.getEnchantmentLevel(EnchantmentUtil.unwrap(level, EnchantmentRegistry.CULTIVATION));
+		if (cultivationLevel > 0) {
 			BlockHitResult hitResult = getPlayerPOVHitResult(level, player, Fluid.ANY);
 			if (!(hitResult.getType() == HitResult.Type.MISS || hitResult.getType() != HitResult.Type.BLOCK)) {
 				BlockPos blockpos = hitResult.getBlockPos();
@@ -90,9 +91,8 @@ public class EnchantmentHandler {
 				if (level.mayInteract(player, blockpos) && player.mayUseItemAt(relativePos, direction, stack)) {
 					FluidState state = level.getFluidState(blockpos);
 					if (state.is(FluidTags.WATER)) {
-						int radius = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegistry.CULTIVATION.get(), stack);
-						for (int x = -radius; x <= radius; x++) {
-							for (int y = -radius; y <= radius; y++) {
+						for (int x = -cultivationLevel; x <= cultivationLevel; x++) {
+							for (int y = -cultivationLevel; y <= cultivationLevel; y++) {
 								Vec3 vec3 = oldHitResult.getLocation().add(x, 0, y);
 								BlockPos newPos = blockpos.offset(x, 0, y);
 								stack.useOn(new UseOnContext(player, event.getHand(), new BlockHitResult(vec3, Direction.UP, newPos, false)));
@@ -113,11 +113,10 @@ public class EnchantmentHandler {
 		final BlockPos blockpos = event.getPos();
 		final InteractionHand hand = event.getHand();
 
-		boolean hasYielding = EnchantmentUtil.hasEnchantment(EnchantmentRegistry.YIELDING.get(), stack);
-		if (hasYielding) {
-			int radius = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegistry.YIELDING.get(), stack);
-			for (int x = -radius; x <= radius; x++) {
-				for (int y = -radius; y <= radius; y++) {
+		int yieldingLevel = stack.getEnchantmentLevel(EnchantmentUtil.unwrap(level, EnchantmentRegistry.YIELDING));
+		if (yieldingLevel > 0) {
+			for (int x = -yieldingLevel; x <= yieldingLevel; x++) {
+				for (int y = -yieldingLevel; y <= yieldingLevel; y++) {
 					BlockPos newPos = blockpos.offset(x, 0, y);
 					BlockState state = level.getBlockState(newPos);
 					if (state.getBlock() instanceof BushBlock || state.getBlock() instanceof LeavesBlock) {
@@ -147,8 +146,7 @@ public class EnchantmentHandler {
 
 	private void handleAffection(ItemStack stack, Event event) {
 		if (event instanceof ICancellableEvent cancellableEvent) {
-			boolean hasAffection = EnchantmentUtil.hasEnchantment(EnchantmentRegistry.AFFECTION.get(), stack);
-			if (hasAffection) {
+			if (EnchantmentHelper.has(stack, EnchantmentEffectRegistry.AFFECTION.get())) {
 				int maxDamage = stack.getMaxDamage();
 				int damage = maxDamage - stack.getDamageValue();
 				int minAllowed = (int) Math.floor(((double) maxDamage) * HexConfig.COMMON.affectionPercentage.get()) + 1;

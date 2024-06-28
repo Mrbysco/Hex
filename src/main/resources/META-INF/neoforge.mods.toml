@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[3,)"
+loaderVersion="[4,)"
 issueTrackerURL="https://github.com/Mrbysco/Hex/issues"
 license="MIT"
 
@@ -15,14 +15,14 @@ More enchantments? More fun? More fun for everyone!
 [[dependencies.hex]]
 modId="minecraft"
 type="REQUIRED"
-versionRange="[1.20.6,1.21)"
+versionRange="[1.21,1.22)"
 ordering="NONE"
 side="BOTH"
 [[dependencies.hex]]
 modId="neoforge"
 type="REQUIRED"
-versionRange="[20.6.12-beta,)"
+versionRange="[21.0.31-beta,)"
 ordering="NONE"
 side="BOTH"
 [[mixins]]
-config = "hex.mixins.json"
+config="hex.mixins.json"

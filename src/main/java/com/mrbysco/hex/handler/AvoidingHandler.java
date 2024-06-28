@@ -1,17 +1,17 @@
 package com.mrbysco.hex.handler;
 
 import com.mrbysco.hex.config.HexConfig;
-import com.mrbysco.hex.registry.EnchantmentRegistry;
-import com.mrbysco.hex.util.EnchantmentUtil;
+import com.mrbysco.hex.registry.EnchantmentEffectRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,7 +26,7 @@ public class AvoidingHandler {
 		if (avoidingFlag) {
 			for (ItemEntity drop : drops) {
 				ItemStack stack = drop.getItem().copy();
-				if (EnchantmentUtil.hasEnchantment(EnchantmentRegistry.AVOIDING.get(), stack)) {
+				if (EnchantmentHelper.has(stack, EnchantmentEffectRegistry.AVOIDING.get())) {
 					Level level = drop.level();
 					if (!level.isClientSide) {
 						ServerLevel serverLevel = (ServerLevel) level;
@@ -49,7 +49,7 @@ public class AvoidingHandler {
 	public static void entityLeaveWorldEvent(ItemEntity itemEntity) {
 		Level level = itemEntity.level();
 		ItemStack stack = itemEntity.getItem().copy();
-		if (!level.isClientSide && EnchantmentUtil.hasEnchantment(EnchantmentRegistry.AVOIDING.get(), stack)) {
+		if (!level.isClientSide && EnchantmentHelper.has(stack, EnchantmentEffectRegistry.AVOIDING.get())) {
 			ServerLevel serverLevel = (ServerLevel) level;
 			if (!level.dimension().location().equals(Level.OVERWORLD.location())) {
 				MinecraftServer server = serverLevel.getServer();
