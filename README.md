@@ -7,7 +7,7 @@ More enchantments? More fun? More fun for everyone!
 
 ## License ##
 * Hex is licensed under the MIT License
-  - (c) 2021 ShyNieke, Mrbysco
+  - (c) 2025 ShyNieke, Mrbysco
   - [![License](https://img.shields.io/badge/License-MIT-red.svg?style=flat)](http://opensource.org/licenses/MIT)
 
 ## Downloads ##
