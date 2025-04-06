@@ -2,6 +2,8 @@ package com.mrbysco.hex.handler;
 
 import com.mrbysco.hex.registry.EnchantmentEffectRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -32,13 +34,15 @@ public class YingYangHandler {
 				&& EnchantmentHelper.has(stack, EnchantmentEffectRegistry.YING.get());
 
 		if (lightValue <= 7) {
-			for (ItemStack stack : player.getArmorSlots()) {
+			for (EquipmentSlot slot : EquipmentSlotGroup.ARMOR) {
+				ItemStack stack = player.getItemBySlot(slot);
 				if (stackPredicate.test(stack)) {
 					stack.setDamageValue(stack.getDamageValue() - 1);
 				}
 			}
 
-			for (ItemStack stack : player.getHandSlots()) {
+			for (EquipmentSlot slot : EquipmentSlotGroup.HAND) {
+				ItemStack stack = player.getItemBySlot(slot);
 				if (stackPredicate.test(stack)) {
 					stack.setDamageValue(stack.getDamageValue() - 1);
 				}
@@ -51,13 +55,15 @@ public class YingYangHandler {
 				&& EnchantmentHelper.has(stack, EnchantmentEffectRegistry.YANG.get());
 
 		if (lightValue > 7) {
-			for (ItemStack stack : player.getArmorSlots()) {
+			for (EquipmentSlot slot : EquipmentSlotGroup.ARMOR) {
+				ItemStack stack = player.getItemBySlot(slot);
 				if (stackPredicate.test(stack)) {
 					stack.setDamageValue(stack.getDamageValue() - 1);
 				}
 			}
 
-			for (ItemStack stack : player.getHandSlots()) {
+			for (EquipmentSlot slot : EquipmentSlotGroup.HAND) {
+				ItemStack stack = player.getItemBySlot(slot);
 				if (stackPredicate.test(stack)) {
 					stack.setDamageValue(stack.getDamageValue() - 1);
 				}
