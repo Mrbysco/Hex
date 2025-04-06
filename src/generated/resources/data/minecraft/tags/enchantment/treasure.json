@@ -1,6 +1,12 @@
 {
   "values": [
-    "hex:affection",
-    "hex:noncombining"
+    {
+      "id": "hex:affection",
+      "required": false
+    },
+    {
+      "id": "hex:noncombining",
+      "required": false
+    }
   ]
 }

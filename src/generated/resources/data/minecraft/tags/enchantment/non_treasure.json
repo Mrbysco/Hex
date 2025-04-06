@@ -1,11 +1,32 @@
 {
   "values": [
-    "hex:cultivation",
-    "hex:yielding",
-    "hex:ying",
-    "hex:yang",
-    "hex:golden_glint",
-    "hex:avoiding",
-    "hex:cheapskate"
+    {
+      "id": "hex:cultivation",
+      "required": false
+    },
+    {
+      "id": "hex:yielding",
+      "required": false
+    },
+    {
+      "id": "hex:ying",
+      "required": false
+    },
+    {
+      "id": "hex:yang",
+      "required": false
+    },
+    {
+      "id": "hex:golden_glint",
+      "required": false
+    },
+    {
+      "id": "hex:avoiding",
+      "required": false
+    },
+    {
+      "id": "hex:cheapskate",
+      "required": false
+    }
   ]
 }

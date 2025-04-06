@@ -2,15 +2,12 @@ package com.mrbysco.hex.datagen;
 
 import com.mrbysco.hex.Hex;
 import com.mrbysco.hex.registry.EnchantmentRegistry;
-import net.minecraft.core.Cloner;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.RegistrySetBuilder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.data.tags.EnchantmentTagsProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -19,7 +16,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
@@ -29,51 +25,49 @@ import java.util.concurrent.CompletableFuture;
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class HexDatagen {
 	@SubscribeEvent
-	public static void gatherData(GatherDataEvent event) {
+	public static void gatherData(GatherDataEvent.Client event) {
 		DataGenerator generator = event.getGenerator();
 		PackOutput packOutput = generator.getPackOutput();
-		ExistingFileHelper helper = event.getExistingFileHelper();
+		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-		if (event.includeServer()) {
-			generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(
-					packOutput, CompletableFuture.supplyAsync(HexDatagen::getProvider), Set.of(Hex.MOD_ID)));
+		generator.addProvider(true, new ModDatapackProvider(
+				packOutput,
+				event.getLookupProvider(),
+				Set.of(Hex.MOD_ID)
+		));
+		generator.addProvider(true, new ModEnchantmentTagProvider(packOutput,
+				lookupProvider));
 
-			generator.addProvider(event.includeServer(), new ModEnchantmentTagProvider(packOutput,
-					CompletableFuture.supplyAsync(() -> HexDatagen.getProvider().full()), helper));
-		}
-		if (event.includeClient()) {
-			generator.addProvider(event.includeClient(), new HexLanguage(packOutput));
+		generator.addProvider(true, new HexLanguage(packOutput));
+	}
+
+	public static class ModDatapackProvider extends DatapackBuiltinEntriesProvider {
+		public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
+				.add(Registries.ENCHANTMENT, EnchantmentRegistry::bootstrap);
+
+		public ModDatapackProvider(PackOutput output, CompletableFuture<Provider> registries, Set<String> modIds) {
+			super(output, registries, BUILDER, modIds);
 		}
 	}
 
-	private static RegistrySetBuilder.PatchedRegistries getProvider() {
-		final RegistrySetBuilder registryBuilder = new RegistrySetBuilder();
-		registryBuilder.add(Registries.ENCHANTMENT, EnchantmentRegistry::bootstrap);
-
-		RegistryAccess.Frozen regAccess = RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY);
-		Cloner.Factory cloner$factory = new Cloner.Factory();
-		net.neoforged.neoforge.registries.DataPackRegistriesHooks.getDataPackRegistriesWithDimensions().forEach(data -> data.runWithArguments(cloner$factory::addCodec));
-		return registryBuilder.buildPatch(regAccess, VanillaRegistries.createLookup(), cloner$factory);
-	}
 
 	private static class ModEnchantmentTagProvider extends EnchantmentTagsProvider {
-		public ModEnchantmentTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> plookupprovider, ExistingFileHelper fileHelper) {
-			super(output, plookupprovider, Hex.MOD_ID, fileHelper);
+		public ModEnchantmentTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+			super(output, lookupProvider, Hex.MOD_ID);
 		}
 
 		@Override
 		protected void addTags(HolderLookup.Provider pProvider) {
-			tag(EnchantmentTags.CURSE).add(EnchantmentRegistry.AFFECTION).add(EnchantmentRegistry.NONCOMBINING);
-			tag(EnchantmentTags.TREASURE).add(EnchantmentRegistry.AFFECTION).add(EnchantmentRegistry.NONCOMBINING);
-			tag(EnchantmentTags.NON_TREASURE).add(
-					EnchantmentRegistry.CULTIVATION,
-					EnchantmentRegistry.YIELDING,
-					EnchantmentRegistry.YING,
-					EnchantmentRegistry.YANG,
-					EnchantmentRegistry.GOLDEN_GLINT,
-					EnchantmentRegistry.AVOIDING,
-					EnchantmentRegistry.CHEAPSKATE
-			);
+			tag(EnchantmentTags.CURSE).addOptional(EnchantmentRegistry.AFFECTION.location()).addOptional(EnchantmentRegistry.NONCOMBINING.location());
+			tag(EnchantmentTags.TREASURE).addOptional(EnchantmentRegistry.AFFECTION.location()).addOptional(EnchantmentRegistry.NONCOMBINING.location());
+			tag(EnchantmentTags.NON_TREASURE)
+					.addOptional(EnchantmentRegistry.CULTIVATION.location())
+					.addOptional(EnchantmentRegistry.YIELDING.location())
+					.addOptional(EnchantmentRegistry.YING.location())
+					.addOptional(EnchantmentRegistry.YANG.location())
+					.addOptional(EnchantmentRegistry.GOLDEN_GLINT.location())
+					.addOptional(EnchantmentRegistry.AVOIDING.location())
+					.addOptional(EnchantmentRegistry.CHEAPSKATE.location());
 		}
 	}
 

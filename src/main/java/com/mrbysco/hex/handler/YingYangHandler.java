@@ -1,8 +1,6 @@
 package com.mrbysco.hex.handler;
 
 import com.mrbysco.hex.registry.EnchantmentEffectRegistry;
-import com.mrbysco.hex.registry.EnchantmentRegistry;
-import com.mrbysco.hex.util.EnchantmentUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

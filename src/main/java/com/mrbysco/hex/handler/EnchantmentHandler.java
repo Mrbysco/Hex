@@ -3,7 +3,6 @@ package com.mrbysco.hex.handler;
 import com.mrbysco.hex.config.HexConfig;
 import com.mrbysco.hex.registry.EnchantmentEffectRegistry;
 import com.mrbysco.hex.registry.EnchantmentRegistry;
-import com.mrbysco.hex.util.EnchantmentUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -81,7 +80,7 @@ public class EnchantmentHandler {
 		final Player player = event.getEntity();
 		final ItemStack stack = event.getItemStack();
 
-		int cultivationLevel = stack.getEnchantmentLevel(EnchantmentUtil.unwrap(level, EnchantmentRegistry.CULTIVATION));
+		int cultivationLevel = stack.getEnchantmentLevel(level.holderOrThrow(EnchantmentRegistry.CULTIVATION));
 		if (cultivationLevel > 0) {
 			BlockHitResult hitResult = getPlayerPOVHitResult(level, player, Fluid.ANY);
 			if (!(hitResult.getType() == HitResult.Type.MISS || hitResult.getType() != HitResult.Type.BLOCK)) {
@@ -113,7 +112,7 @@ public class EnchantmentHandler {
 		final BlockPos blockpos = event.getPos();
 		final InteractionHand hand = event.getHand();
 
-		int yieldingLevel = stack.getEnchantmentLevel(EnchantmentUtil.unwrap(level, EnchantmentRegistry.YIELDING));
+		int yieldingLevel = stack.getEnchantmentLevel(level.holderOrThrow(EnchantmentRegistry.YIELDING));
 		if (yieldingLevel > 0) {
 			for (int x = -yieldingLevel; x <= yieldingLevel; x++) {
 				for (int y = -yieldingLevel; y <= yieldingLevel; y++) {
