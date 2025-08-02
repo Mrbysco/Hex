@@ -28,11 +28,10 @@ public class AvoidingHandler {
 				ItemStack stack = drop.getItem().copy();
 				if (EnchantmentHelper.has(stack, EnchantmentEffectRegistry.AVOIDING.get())) {
 					Level level = drop.level();
-					if (!level.isClientSide) {
-						ServerLevel serverLevel = (ServerLevel) level;
+					if (level instanceof ServerLevel serverLevel) {
 						if (!level.dimension().location().equals(Level.OVERWORLD.location())) {
 							MinecraftServer server = serverLevel.getServer();
-							serverLevel = server.getLevel(Level.OVERWORLD);
+							serverLevel = server.overworld();
 						}
 						BlockPos spawnPos = serverLevel.getSharedSpawnPos();
 						ItemEntity newEntity = new ItemEntity(serverLevel, spawnPos.getX(), spawnPos.getY() + 0.5, spawnPos.getZ(), stack);

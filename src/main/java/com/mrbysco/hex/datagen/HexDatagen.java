@@ -22,7 +22,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber
 public class HexDatagen {
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent.Client event) {
@@ -58,16 +58,16 @@ public class HexDatagen {
 
 		@Override
 		protected void addTags(HolderLookup.Provider pProvider) {
-			tag(EnchantmentTags.CURSE).addOptional(EnchantmentRegistry.AFFECTION.location()).addOptional(EnchantmentRegistry.NONCOMBINING.location());
-			tag(EnchantmentTags.TREASURE).addOptional(EnchantmentRegistry.AFFECTION.location()).addOptional(EnchantmentRegistry.NONCOMBINING.location());
+			tag(EnchantmentTags.CURSE).addOptional(EnchantmentRegistry.AFFECTION).addOptional(EnchantmentRegistry.NONCOMBINING);
+			tag(EnchantmentTags.TREASURE).addOptional(EnchantmentRegistry.AFFECTION).addOptional(EnchantmentRegistry.NONCOMBINING);
 			tag(EnchantmentTags.NON_TREASURE)
-					.addOptional(EnchantmentRegistry.CULTIVATION.location())
-					.addOptional(EnchantmentRegistry.YIELDING.location())
-					.addOptional(EnchantmentRegistry.YING.location())
-					.addOptional(EnchantmentRegistry.YANG.location())
-					.addOptional(EnchantmentRegistry.GOLDEN_GLINT.location())
-					.addOptional(EnchantmentRegistry.AVOIDING.location())
-					.addOptional(EnchantmentRegistry.CHEAPSKATE.location());
+					.addOptional(EnchantmentRegistry.CULTIVATION)
+					.addOptional(EnchantmentRegistry.YIELDING)
+					.addOptional(EnchantmentRegistry.YING)
+					.addOptional(EnchantmentRegistry.YANG)
+					.addOptional(EnchantmentRegistry.GOLDEN_GLINT)
+					.addOptional(EnchantmentRegistry.AVOIDING)
+					.addOptional(EnchantmentRegistry.CHEAPSKATE);
 		}
 	}
 
