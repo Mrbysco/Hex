@@ -29,7 +29,7 @@ public class AvoidingHandler {
 				if (EnchantmentHelper.has(stack, EnchantmentEffectRegistry.AVOIDING.get())) {
 					Level level = drop.level();
 					if (level instanceof ServerLevel serverLevel) {
-						if (!level.dimension().location().equals(Level.OVERWORLD.location())) {
+						if (!level.dimension().identifier().equals(Level.OVERWORLD.identifier())) {
 							MinecraftServer server = serverLevel.getServer();
 							serverLevel = server.overworld();
 						}
@@ -50,7 +50,7 @@ public class AvoidingHandler {
 		ItemStack stack = itemEntity.getItem().copy();
 		if (!level.isClientSide() && EnchantmentHelper.has(stack, EnchantmentEffectRegistry.AVOIDING.get())) {
 			ServerLevel serverLevel = (ServerLevel) level;
-			if (!level.dimension().location().equals(Level.OVERWORLD.location())) {
+			if (!level.dimension().identifier().equals(Level.OVERWORLD.identifier())) {
 				MinecraftServer server = serverLevel.getServer();
 				serverLevel = server.getLevel(Level.OVERWORLD);
 			}

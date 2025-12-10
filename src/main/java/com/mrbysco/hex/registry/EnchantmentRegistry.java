@@ -4,8 +4,8 @@ import com.mrbysco.hex.Hex;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.Item;
@@ -127,11 +127,11 @@ public class EnchantmentRegistry {
 	}
 
 	private static ResourceKey<Enchantment> key(String path) {
-		return ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(Hex.MOD_ID, path));
+		return ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath(Hex.MOD_ID, path));
 	}
 
 	private static void register(BootstrapContext<Enchantment> context, ResourceKey<Enchantment> resourceKey,
 	                             Enchantment.Builder builder) {
-		context.register(resourceKey, builder.build(resourceKey.location()));
+		context.register(resourceKey, builder.build(resourceKey.identifier()));
 	}
 }

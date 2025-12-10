@@ -9,8 +9,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EnchantmentTagsProvider;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -107,12 +107,12 @@ public class HexDatagen {
 		}
 
 		private void addEnchantment(ResourceKey<Enchantment> key, String name) {
-			ResourceLocation location = key.location();
+			Identifier location = key.identifier();
 			add("enchantment." + location.getNamespace() + "." + location.getPath(), name);
 		}
 
 		private void addEnchantmentDescription(ResourceKey<Enchantment> key, String description) {
-			ResourceLocation location = key.location();
+			Identifier location = key.identifier();
 			add("enchantment." + location.getNamespace() + "." + location.getPath() + ".desc", description);
 		}
 	}
