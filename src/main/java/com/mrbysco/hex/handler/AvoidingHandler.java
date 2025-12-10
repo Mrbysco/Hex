@@ -33,7 +33,7 @@ public class AvoidingHandler {
 							MinecraftServer server = serverLevel.getServer();
 							serverLevel = server.overworld();
 						}
-						BlockPos spawnPos = serverLevel.getSharedSpawnPos();
+						BlockPos spawnPos = serverLevel.getRespawnData().pos();
 						ItemEntity newEntity = new ItemEntity(serverLevel, spawnPos.getX(), spawnPos.getY() + 0.5, spawnPos.getZ(), stack);
 						serverLevel.addFreshEntity(newEntity);
 					}
@@ -48,13 +48,13 @@ public class AvoidingHandler {
 	public static void entityLeaveWorldEvent(ItemEntity itemEntity) {
 		Level level = itemEntity.level();
 		ItemStack stack = itemEntity.getItem().copy();
-		if (!level.isClientSide && EnchantmentHelper.has(stack, EnchantmentEffectRegistry.AVOIDING.get())) {
+		if (!level.isClientSide() && EnchantmentHelper.has(stack, EnchantmentEffectRegistry.AVOIDING.get())) {
 			ServerLevel serverLevel = (ServerLevel) level;
 			if (!level.dimension().location().equals(Level.OVERWORLD.location())) {
 				MinecraftServer server = serverLevel.getServer();
 				serverLevel = server.getLevel(Level.OVERWORLD);
 			}
-			BlockPos spawnPos = serverLevel.getSharedSpawnPos();
+			BlockPos spawnPos = serverLevel.getRespawnData().pos();
 			ItemEntity newEntity = new ItemEntity(serverLevel, spawnPos.getX(), spawnPos.getY() + 0.5, spawnPos.getZ(), stack);
 			serverLevel.addFreshEntity(newEntity);
 		}
