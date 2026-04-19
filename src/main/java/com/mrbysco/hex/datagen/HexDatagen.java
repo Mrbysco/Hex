@@ -108,12 +108,12 @@ public class HexDatagen {
 
 		private void addEnchantment(ResourceKey<Enchantment> key, String name) {
 			Identifier location = key.identifier();
-			add("enchantment." + location.getNamespace() + "." + location.getPath(), name);
+			add("enchantment." + location.toLanguageKey(), name);
 		}
 
 		private void addEnchantmentDescription(ResourceKey<Enchantment> key, String description) {
 			Identifier location = key.identifier();
-			add("enchantment." + location.getNamespace() + "." + location.getPath() + ".desc", description);
+			add("enchantment." + location.toLanguageKey() + ".desc", description);
 		}
 	}
 }

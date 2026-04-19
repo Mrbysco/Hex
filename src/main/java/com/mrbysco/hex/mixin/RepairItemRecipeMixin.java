@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class RepairItemRecipeMixin {
 
 	@Inject(method = "matches(Lnet/minecraft/world/item/crafting/CraftingInput;Lnet/minecraft/world/level/Level;)Z", at = @At(value = "HEAD"), cancellable = true)
-	public void hex$matches(CraftingInput container, Level level, CallbackInfoReturnable<Boolean> cir) {
-		for (int i = 0; i < container.size(); ++i) {
-			ItemStack stack = container.getItem(i);
+	public void hex$matches(CraftingInput input, Level level, CallbackInfoReturnable<Boolean> cir) {
+		for (int i = 0; i < input.size(); ++i) {
+			ItemStack stack = input.getItem(i);
 			if (EnchantmentHelper.has(stack, EnchantmentEffectRegistry.NON_COMBINING.get())) {
 				cir.setReturnValue(false);
 			}
