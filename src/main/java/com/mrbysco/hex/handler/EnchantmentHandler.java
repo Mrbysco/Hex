@@ -62,7 +62,7 @@ public class EnchantmentHandler {
 	}
 
 	@SubscribeEvent
-	public void onPlayerEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
+	public void onPlayerEntityInteractSpecific(PlayerInteractEvent.EntityInteract event) {
 		final ItemStack stack = event.getItemStack();
 		handleAffection(stack, event);
 	}
